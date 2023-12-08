@@ -5,3 +5,5 @@ npm run dev
 npm install three
 
 vite.config.js로 root가 src라고 알려주기
+
+cp -R 기본파일 새 파일
