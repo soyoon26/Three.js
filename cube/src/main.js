@@ -26,7 +26,7 @@ function init() {
   ); //카메라 추가
 
   const geometry = new THREE.BoxGeometry(2, 2, 2); //높이, 넓이, 길이
-  const material = new THREE.MeshBasicMaterial({ color: 0xff8b94 });
+  const material = new THREE.MeshStandardMaterial({ color: 0xff8b94 }); //MeshBasicMaterial은 조명에 영향받지 않음
 
   const cube = new THREE.Mesh(geometry, material);
   scene.add(cube);
@@ -34,6 +34,16 @@ function init() {
   // camera.position.z=5
   camera.position.set(3, 4, 5); //앞방향으로 이동
   camera.lookAt(cube.position);
+  const directionalLight = new THREE.DirectionalLight(0xf0f0f0, 1); //조명의 색과 강도
+
+  directionalLight.position.set(-1, 2, 3);
+
+  scene.add(directionalLight);
+
+  const ambientLight = new THREE.AmbientLight(0xffffff, 0.1);
+
+  ambientLight.position.set(3, 2, 1);
+  scene.add(ambientLight);
 
   renderer.render(scene, camera);
 }
