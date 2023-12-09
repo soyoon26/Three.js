@@ -26,7 +26,16 @@ function init() {
   ); //카메라 추가
 
   const geometry = new THREE.BoxGeometry(2, 2, 2); //높이, 넓이, 길이
-  const material = new THREE.MeshStandardMaterial({ color: 0xff8b94 }); //MeshBasicMaterial은 조명에 영향받지 않음
+  const material = new THREE.MeshStandardMaterial({
+    color: new THREE.Color(0xff8b94), //0xff8b94, '#시작','색이름'
+    //transparent: true,
+    //opacity: 0.5, transparent가 flase면 영향x
+    //visible: flase,
+    //wireframe: true, 뼈대 확인
+    //side: THREE.DoubleSide 양면은 컴퓨터 리소스가 더 많이 필요
+  }); //MeshBasicMaterial은 조명에 W영향받지 않음
+
+  //material.color = new THREE.Color(0xff8b94) 로도 가능
 
   const cube = new THREE.Mesh(geometry, material);
   scene.add(cube);
