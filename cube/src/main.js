@@ -9,6 +9,7 @@ window.addEventListener("load", function () {
 function init() {
   const renderer = new THREE.WebGLRenderer({
     //alpha: true, //까만 배경으로 뜨지 않게 하려면
+    antialias: true, //모서리가 까끌하지 않게
   });
 
   renderer.setSize(window.innerWidth, window.innerHeight);
@@ -23,6 +24,16 @@ function init() {
     1, //near
     500 //far
   ); //카메라 추가
+
+  const geometry = new THREE.BoxGeometry(2, 2, 2); //높이, 넓이, 길이
+  const material = new THREE.MeshBasicMaterial({ color: 0xff8b94 });
+
+  const cube = new THREE.Mesh(geometry, material);
+  scene.add(cube);
+
+  // camera.position.z=5
+  camera.position.set(3, 4, 5); //앞방향으로 이동
+  camera.lookAt(cube.position);
 
   renderer.render(scene, camera);
 }
