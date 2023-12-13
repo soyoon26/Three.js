@@ -55,4 +55,13 @@ function init() {
   scene.add(ambientLight);
 
   renderer.render(scene, camera);
+
+  function handleResize() {
+    camera.aspect = window.innerWidth / window.innerHeight; //이렇게 바꾸면
+    camera.updateProjectionMatrix(); //를 반드시 호출해야 함
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.render(scene, camera); //새롭게 반영되도록
+  }
+  window.addEventListener("resize", handleResize);
+  //카메라의 종횡비도 다시 설정해야 함
 }

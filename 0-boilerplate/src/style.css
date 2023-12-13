@@ -5,4 +5,5 @@ body {
 
 * {
   box-sizing: border-box;
+  /* width와 height가 패딩과 테두리까지 포함한 크기로 계산 */
 }
