@@ -53,8 +53,20 @@ function init() {
 
   ambientLight.position.set(3, 2, 1);
   scene.add(ambientLight);
+  const clock = new THREE.Clock();
+  render();
+  function render() {
+    //cube.rotation.x = THREE.MathUtils.degToRad(45); 라디안으로 적용됨
+    cube.rotation.x += clock.getDelta();
+    //= clock.getElapsedTime();
+    //Date.now() / 1000;
+    //빌트인으로 제공하는 클락을 사용해도 됨
 
-  renderer.render(scene, camera);
+    //cube.position.y = Math.sin(cube.rotation.x); //1에서 -1사이
+    //cube.scale.x = Math.cos(cube.rotation.x);
+    renderer.render(scene, camera);
+    requestAnimationFrame(render); //재귀적 사용
+  }
 
   function handleResize() {
     camera.aspect = window.innerWidth / window.innerHeight; //이렇게 바꾸면
