@@ -1,6 +1,7 @@
 import * as THREE from "three";
 //three 설치하고 불러오기
-
+import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
+//빌트인
 window.addEventListener("load", function () {
   init();
 });
@@ -24,6 +25,23 @@ function init() {
     1, //near
     500 //far
   ); //카메라 추가
+
+  const controls = new OrbitControls(camera, renderer.domElement); //카메라 위치가 변경됨
+  controls.autoRotate = true; //설정하면 업데이트 해야 함
+  //const axesHelper = new THREE.AxesHelper(5);
+  //scene.add(axesHelper);
+  //controls.autoRotateSpeed = 30;
+  controls.enableDamping = true; //관성 설정
+  //controls.dampingFactor = 0.01; //더 오래 유지함
+  controls.enableZoom = true; //기본값, 무한대로 가능
+  controls.enablePan = true; //우클릭 기본값임
+
+  controls.maxPolarAngle = Math.PI / 2;
+  controls.minPolarAngle = Math.PI / 3;
+  //수평은 minAzimuthAncgle
+  //얼마나 돌릴 수 있는지
+  //controls.maxDistance = 50;
+  //controls.minDistance = 10; zoom
 
   //const geometry = new THREE.BoxGeometry(2, 2, 2); //높이, 넓이, 길이
   const cubeGeometry = new THREE.IcosahedronGeometry(1); //반지름 길이
@@ -70,19 +88,20 @@ function init() {
   function render() {
     const elapsedTime = clock.getElapsedTime();
     //cube.rotation.x = THREE.MathUtils.degToRad(45); 라디안으로 적용됨
-    cube.rotation.x = elapsedTime;
-    cube.rotation.y = elapsedTime;
+    //cube.rotation.x = elapsedTime;
+    //cube.rotation.y = elapsedTime;
     //cube.rotation.x += clock.getDelta();
     //= clock.getElapsedTime();
     //Date.now() / 1000;
     //빌트인으로 제공하는 클락을 사용해도 됨
 
-    skeleton.rotation.x = elapsedTime * 1.5;
-    skeleton.rotation.y = elapsedTime * 1.5;
+    //skeleton.rotation.x = elapsedTime * 1.5;
+    //skeleton.rotation.y = elapsedTime * 1.5;
 
     //cube.position.y = Math.sin(cube.rotation.x); //1에서 -1사이
     //cube.scale.x = Math.cos(cube.rotation.x);
     renderer.render(scene, camera);
+    controls.update();
     requestAnimationFrame(render); //재귀적 사용
   }
 
@@ -91,6 +110,7 @@ function init() {
     camera.updateProjectionMatrix(); //를 반드시 호출해야 함
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.render(scene, camera); //새롭게 반영되도록
+    controls.update();
   }
   window.addEventListener("resize", handleResize);
   //카메라의 종횡비도 다시 설정해야 함
