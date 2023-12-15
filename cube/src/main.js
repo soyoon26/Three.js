@@ -1,7 +1,7 @@
 import * as THREE from "three";
 //three 설치하고 불러오기
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
-//빌트인
+//빌트인 주변으로 회전하거나 줌인하도록 해줌
 window.addEventListener("load", function () {
   init();
 });
@@ -9,6 +9,7 @@ window.addEventListener("load", function () {
 
 function init() {
   const renderer = new THREE.WebGLRenderer({
+    //웹 브라우저에서 하드웨어 가속 그래픽을 사용하여 3D 그래픽을 효율적으로 렌더링할 수 있게 해주는 웹 그래픽스 API
     //alpha: true, //까만 배경으로 뜨지 않게 하려면
     antialias: true, //모서리가 까끌하지 않게
   });
@@ -16,17 +17,20 @@ function init() {
   renderer.setSize(window.innerWidth, window.innerHeight);
   //캔버스 사이즈 조절
   document.body.appendChild(renderer.domElement); //캔버스 요소
-
+  //domElement: HTML 요소, <canvas> 엘리먼트
+  //renderer.domElement를 <body>에 추가
+  //WebGLRenderer에서 만든 캔버스를 바디에 추가한다는 뜻
   const scene = new THREE.Scene(); //씬 추가
 
-  const camera = new THREE.PerspectiveCamera(
+  const camera = new THREE.PerspectiveCamera( //new는 새 객체를 생성한다는 뜻
     75, //field of view = 시야각
     window.innerWidth / window.innerHeight, //카메라의 종횡비
-    1, //near
+    1, //near 가까운 투영평면
     500 //far
   ); //카메라 추가
 
-  const controls = new OrbitControls(camera, renderer.domElement); //카메라 위치가 변경됨
+  const controls = new OrbitControls(camera, renderer.domElement);
+  //카메라 위치가 변경됨, 움직일 html요소
   controls.autoRotate = true; //설정하면 업데이트 해야 함
   //const axesHelper = new THREE.AxesHelper(5);
   //scene.add(axesHelper);
@@ -39,7 +43,7 @@ function init() {
   controls.maxPolarAngle = Math.PI / 2;
   controls.minPolarAngle = Math.PI / 3;
   //수평은 minAzimuthAncgle
-  //얼마나 돌릴 수 있는지
+  //얼마나 돌릴 수 있는지 보는 각도 제한
   //controls.maxDistance = 50;
   //controls.minDistance = 10; zoom
 
@@ -48,7 +52,7 @@ function init() {
   //radius, detail
   const cubeMaterial = new THREE.MeshLambertMaterial({
     color: new THREE.Color(0xff8b94), //0xff8b94, '#시작','색이름'
-    emissive: 0x111111,
+    emissive: 0x111111, // 빛 방출
     //transparent: true,
     //opacity: 0.5, transparent가 flase면 영향x
     //visible: flase,
@@ -86,11 +90,11 @@ function init() {
   const clock = new THREE.Clock();
   render();
   function render() {
-    const elapsedTime = clock.getElapsedTime();
+    //const elapsedTime = clock.getElapsedTime();
     //cube.rotation.x = THREE.MathUtils.degToRad(45); 라디안으로 적용됨
     //cube.rotation.x = elapsedTime;
-    //cube.rotation.y = elapsedTime;
-    //cube.rotation.x += clock.getDelta();
+    //cube.rotation.y = elapsedTime; 경과한 전체시간
+    //cube.rotation.x += clock.getDelta(); 한 프레임에서 다른 프레임으로 넘어갈때까지 걸리는 시간
     //= clock.getElapsedTime();
     //Date.now() / 1000;
     //빌트인으로 제공하는 클락을 사용해도 됨
@@ -114,4 +118,5 @@ function init() {
   }
   window.addEventListener("resize", handleResize);
   //카메라의 종횡비도 다시 설정해야 함
+  //resize가 감지되면 handleResize라는 콜백함수 실행
 }
