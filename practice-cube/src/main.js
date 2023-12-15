@@ -1,11 +1,10 @@
 import * as THREE from "three";
-//three 설치하고 불러오기
+
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 
 window.addEventListener("load", function () {
   init();
 });
-//load가 되면 init실행
 
 function init() {
   const renderer = new THREE.WebGLRenderer({
