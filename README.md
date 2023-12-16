@@ -12,3 +12,5 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
 
 instal lil-gui
 import GUI from 'lil-gui'
+
+facetype.js 변환
