@@ -2,12 +2,17 @@ import * as THREE from "three";
 //three 설치하고 불러오기
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 //빌트인 주변으로 회전하거나 줌인하도록 해줌
+
+import GUI from "lil-gui"; //코드 제일 아래
 window.addEventListener("load", function () {
   init();
 });
 //load가 되면 init실행
 
 function init() {
+  const options = {
+    color: 0xff8b94,
+  };
   const renderer = new THREE.WebGLRenderer({
     //웹 브라우저에서 하드웨어 가속 그래픽을 사용하여 3D 그래픽을 효율적으로 렌더링할 수 있게 해주는 웹 그래픽스 API
     //alpha: true, //까만 배경으로 뜨지 않게 하려면
@@ -119,4 +124,18 @@ function init() {
   window.addEventListener("resize", handleResize);
   //카메라의 종횡비도 다시 설정해야 함
   //resize가 감지되면 handleResize라는 콜백함수 실행
+
+  const gui = new GUI();
+  // gui.add(cube.position, "y", -3, 3, 0.1);
+  //변경하고자 하는 객체, 변경 프로퍼티, 최소, 최대, 스텝
+  gui.add(cube.position, "y").min(-3).max(3).step(0.1);
+  //가독성 높이기
+  gui.add(cube, "visible");
+  gui
+    .addColor(options, "color")
+    //색상값 16진수나 형식 타입으로 표시해야 함 - const options 만들기
+    .onChange((value) => {
+      cube.material.color.set(value);
+    });
+  //onChange에 콜백함수로 넘겨줌, 색상을 변경할때마다 콜백함수가 호출됨
 }
